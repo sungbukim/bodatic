@@ -1,6 +1,6 @@
 // Bodatic 서비스 워커: 인터넷이 없어도 앱 화면이 열리게 해줘요.
 // 항상 최신 파일을 먼저 받아오고, 실패할 때만 저장해 둔 사본을 써요.
-const CACHE = "bodatic-v2";
+const CACHE = "bodatic-v3";
 const CACHEABLE = url =>
   url.origin === self.location.origin ||
   url.hostname === "www.gstatic.com" ||

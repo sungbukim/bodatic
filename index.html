@@ -15,16 +15,17 @@
 /* Layout: single column planner — brand bar, week strip, day sheet; add bar fixed to the bottom */
 :root{
   --paper:#f5f6f8; --sheet:#ffffff; --ink:#1d2433; --muted:#6b7385; --line:#e2e5ec;
-  --accent:#3046c9; --accent-soft:#e6e9fb; --mark:#fff1a8; --danger:#c2413a; --warn:#a15c00; --ok:#2f7d4f;
-  --display:"Gaegu","Gowun Dodum",cursive,sans-serif;
+  --accent:#3046c9; --accent-soft:#e6e9fb; --mark:#fff1a8; --danger:#c2413a; --warn:#a15c00; --ok:#2f7d4f; --warn-soft:#fff4e0; --warn-line:#f1d7a6;
+  --brand:"Gaegu","Gowun Dodum",cursive,sans-serif;
+  --display:"Gowun Dodum","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --body:"Gowun Dodum","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --paper:#12151c; --sheet:#1a1e27; --ink:#e7e9ef; --muted:#959cad; --line:#2a303c;
-  --accent:#8b9cff; --accent-soft:#252b48; --mark:#4a4520; --danger:#ff8a80; --warn:#f0b35a; --ok:#6fcf97; color-scheme:dark}}
+  --accent:#8b9cff; --accent-soft:#252b48; --mark:#4a4520; --danger:#ff8a80; --warn:#f0b35a; --ok:#6fcf97; --warn-soft:#2c2414; --warn-line:#5a4520; color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#12151c; --sheet:#1a1e27; --ink:#e7e9ef; --muted:#959cad; --line:#2a303c;
-  --accent:#8b9cff; --accent-soft:#252b48; --mark:#4a4520; --danger:#ff8a80; --warn:#f0b35a; --ok:#6fcf97; color-scheme:dark}
+  --accent:#8b9cff; --accent-soft:#252b48; --mark:#4a4520; --danger:#ff8a80; --warn:#f0b35a; --ok:#6fcf97; --warn-soft:#2c2414; --warn-line:#5a4520; color-scheme:dark}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
@@ -36,7 +37,7 @@ button{font:inherit;color:inherit}
 
 /* brand bar */
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:.01em}
+.brand{display:flex;align-items:center;gap:8px;font-family:var(--brand);font-size:22px;font-weight:700;letter-spacing:.01em}
 .brand .mk{width:26px;height:26px;border-radius:8px;background:var(--accent);display:grid;place-items:center;color:#fff;flex:none}
 .top-right{display:flex;align-items:center;gap:8px;min-width:0}
 .sync{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;white-space:nowrap}
@@ -47,8 +48,12 @@ button{font:inherit;color:inherit}
 
 /* day header */
 .dayhead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
-h1{font-family:var(--display);font-size:36px;font-weight:700;line-height:1.1;margin:0;text-wrap:balance}
+h1{font-family:var(--display);font-size:30px;font-weight:700;line-height:1.2;margin:0;text-wrap:balance}
 .sub{color:var(--muted);font-size:13px;margin:2px 0 0}
+.dh-right{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.undone{border:1px solid transparent;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:6px 8px 6px 12px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.undone b{min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--accent);color:var(--sheet);display:grid;place-items:center;font-size:12px;font-variant-numeric:tabular-nums}
+.undone.zero b{background:var(--muted)}
 .pill{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;white-space:nowrap}
 
 /* week strip */
@@ -69,7 +74,7 @@ h1{font-family:var(--display);font-size:36px;font-weight:700;line-height:1.1;mar
 /* sheets */
 .sheet{background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px}
 .sheet-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-.sheet-head h2{font-family:var(--display);font-size:23px;font-weight:700;margin:0}
+.sheet-head h2{font-family:var(--display);font-size:20px;font-weight:700;margin:0}
 .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 .bar{height:4px;border-radius:2px;background:var(--line);overflow:hidden}
 .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
@@ -80,7 +85,7 @@ li:last-child{border-bottom:0}
 li.done .chk{background:var(--accent);border-color:var(--accent)}
 .time{font-size:13px;color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
 .time.none{color:var(--muted);font-weight:400}
-.txt{min-width:0;overflow-wrap:anywhere;font-family:var(--display);font-size:18px;line-height:1.3}
+.txt{min-width:0;overflow-wrap:anywhere;font-family:var(--display);font-size:16px;line-height:1.4}
 li.done .txt{text-decoration:line-through;color:var(--muted)}
 .del{border:0;background:none;color:var(--muted);cursor:pointer;font-size:18px;width:32px;height:32px;border-radius:8px}
 .del:hover{color:var(--danger);background:var(--paper)}
@@ -89,7 +94,7 @@ li.done .txt{text-decoration:line-through;color:var(--muted)}
 .later .row{display:flex;gap:10px;padding:6px 0;cursor:pointer;border:0;background:none;text-align:left;width:100%;font-size:14px}
 .later .d{color:var(--muted);font-variant-numeric:tabular-nums;flex:none;width:72px}
 .later .t{min-width:0;overflow-wrap:anywhere}
-.later .t b{font-family:var(--display);font-size:17px;font-weight:400}
+.later .t b{font-family:var(--display);font-size:15px;font-weight:400}
 
 /* add bar */
 .add{position:fixed;left:0;right:0;bottom:0;background:var(--sheet);border-top:1px solid var(--line);
@@ -97,7 +102,7 @@ li.done .txt{text-decoration:line-through;color:var(--muted)}
 .add form{max-width:560px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px}
 input{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:0}
 #f-title{flex:1 1 100%}
-#f-date{flex:1 1 140px} #f-time{flex:1 1 100px}
+#f-date{flex:1 1 118px} #f-time{flex:1 1 88px}
 .solid{flex:0 0 auto;font-weight:600;border:0;border-radius:10px;padding:10px 18px;background:var(--accent);color:#fff;cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
@@ -105,7 +110,7 @@ input{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var
 .login{min-height:calc(100vh - 200px);display:grid;place-items:center}
 .login-card{width:100%;max-width:380px;background:var(--sheet);border:1px solid var(--line);border-radius:20px;padding:28px 22px;display:flex;flex-direction:column;gap:16px}
 .login-card .mk{width:52px;height:52px;border-radius:16px;background:var(--accent);display:grid;place-items:center;color:#fff}
-.login-card h1{font-size:42px}
+.login-card h1{font-family:var(--brand);font-size:42px}
 .login-card form{display:flex;flex-direction:column;gap:8px}
 .login-card label{font-size:13px;color:var(--muted);margin-top:4px}
 .login-card .solid{margin-top:8px;padding:12px}
@@ -128,6 +133,54 @@ input{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var
 .ghost{border:1px solid var(--line);background:var(--sheet);border-radius:10px;padding:10px 16px;cursor:pointer}
 .solid.red{background:var(--danger)}
 .note{font-size:12px;color:var(--muted);margin:0}
+
+/* list item: tap the title to open details */
+.open{border:0;background:none;padding:0;text-align:left;cursor:pointer;min-width:0;display:flex;flex-direction:column;gap:2px}
+.open .tt{overflow-wrap:anywhere;font-family:var(--display);font-size:16px;line-height:1.4}
+.open .pv{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+li.done .open .tt,.orow.done .open .tt{text-decoration:line-through;color:var(--muted)}
+
+/* inline details (opens under the item) */
+li.expanded{border-bottom-style:solid}
+.ex{grid-column:1/-1;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px;margin-top:2px}
+.ex textarea{min-height:calc(5 * 1.5em + 22px);background:var(--sheet);resize:vertical}
+.ex input{background:var(--sheet)}
+.open[aria-expanded="true"] .tt{color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.ex{animation:exIn .18s ease-out}}
+@keyframes exIn{from{opacity:.4;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+/* overdue banner */
+.overdue{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;border:1px solid var(--warn-line);background:var(--warn-soft);color:var(--warn);border-radius:14px;padding:12px 14px;cursor:pointer;text-align:left;font-size:14px;font-weight:600}
+.overdue .l{display:flex;align-items:center;gap:10px;min-width:0}
+.overdue .ic{width:24px;height:24px;border-radius:50%;background:var(--warn);color:var(--sheet);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
+.overdue .arr{font-size:18px;flex:none}
+
+/* detail + overdue panels */
+.panel.tall{max-height:min(88vh,760px);overflow-y:auto}
+.panel h2{font-family:var(--display);font-size:22px;font-weight:700;margin:0;line-height:1.2}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field label{font-size:12px;color:var(--muted);letter-spacing:.02em}
+.field input,.field textarea{width:100%}
+textarea{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:110px;resize:vertical;line-height:1.5}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.golink{font-size:13px;color:var(--accent);text-decoration:none;align-self:flex-start;overflow-wrap:anywhere}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.actions .sp{flex:1}
+.ghost.danger{color:var(--danger)}
+.ferr{color:var(--danger);font-size:13px;margin:0}
+.og{display:flex;flex-direction:column}
+.og h4{font-family:var(--display);font-size:17px;font-weight:700;margin:14px 0 0;display:flex;align-items:baseline;gap:6px}
+.og h4 small{font-family:var(--body);font-size:12px;color:var(--muted);font-weight:400}
+.og h4.warn{color:var(--warn)}
+.og h4:first-child{margin-top:0}
+.og h3{font-size:13px;color:var(--muted);font-weight:600;margin:12px 0 0;display:flex;justify-content:space-between;gap:8px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.og h3 em{font-style:normal;color:var(--muted);font-weight:500}
+.og h3 em.warn{color:var(--warn)}
+.orow{display:grid;grid-template-columns:auto 44px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line)}
+.orow:last-child{border-bottom:0}
+.orow.done .chk{background:var(--accent);border-color:var(--accent)}
+.mini{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:5px 10px;font-size:12px;cursor:pointer;white-space:nowrap}
+.allbtn{width:100%;padding:12px}
 
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(160px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:10px 14px;border-radius:10px;font-size:14px;display:flex;gap:12px;align-items:center;max-width:calc(100% - 32px);z-index:30}
 .toast button{border:0;background:none;color:var(--mark);font-weight:600;cursor:pointer}
@@ -175,7 +228,10 @@ input{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var
       <h1 id="h-title">오늘</h1>
       <p class="sub" id="h-sub"></p>
     </div>
-    <button class="pill" id="btn-today" type="button">오늘로</button>
+    <div class="dh-right">
+      <button class="pill" id="btn-today" type="button">오늘로</button>
+      <button class="undone" id="btn-undone" type="button" aria-label="미완료 할 일 모아보기">미완료 <b id="undone-n">0</b></button>
+    </div>
   </div>
 
   <div class="week">
@@ -183,6 +239,8 @@ input{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var
     <div class="days" id="days"></div>
     <button class="nav" id="next" type="button" aria-label="다음주">›</button>
   </div>
+
+  <button type="button" class="overdue" id="overdue" hidden><span class="l"><span class="ic" aria-hidden="true">!</span><span id="overdue-txt"></span></span><span class="arr" aria-hidden="true">›</span></button>
 
   <section class="sheet">
     <div class="sheet-head"><h2>할 일</h2><span class="count" id="count"></span></div>
@@ -228,6 +286,19 @@ input{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var
       </div>
     </div>
     <button type="button" class="ghost" id="sheet-close">닫기</button>
+  </div>
+</div>
+
+<!-- 지난 일정 창 -->
+<div class="scrim" id="od" hidden>
+  <div class="panel tall" role="dialog" aria-modal="true" aria-labelledby="od-head">
+    <div>
+      <h2 id="od-head" tabindex="-1">미완료 할 일</h2>
+      <p class="note">아직 체크하지 않은 할 일을 모두 모았어요. 여기서 바로 체크하거나, 지난 일정은 오늘로 옮길 수 있어요.</p>
+    </div>
+    <button type="button" class="solid allbtn" id="od-all">지난 일정 모두 오늘로 옮기기</button>
+    <div class="og" id="od-list"></div>
+    <button type="button" class="ghost" id="od-close">닫기</button>
   </div>
 </div>
 
@@ -385,23 +456,38 @@ function render() {
   }
 
   const list = items.filter(i => i.date === sel).sort((a, b) => (a.done - b.done) || byTime(a, b) || ((a.createdAt || 0) - (b.createdAt || 0)));
+  if (openId && !list.some(i => i.id === openId)) { openId = null; draft = null; }
+  // 다른 기기에서 바뀌어 화면을 다시 그려도, 입력 중인 칸과 커서 위치는 그대로 유지해요
+  const ae = document.activeElement, fid = ae && ae.id && ae.id.startsWith("x-") ? ae.id : null;
+  let s0 = null, s1 = null; try { if (fid) { s0 = ae.selectionStart; s1 = ae.selectionEnd; } } catch (e) {}
   const ul = $("list"); ul.innerHTML = "";
   list.forEach(it => {
-    const li = document.createElement("li"); if (it.done) li.className = "done";
+    const li = document.createElement("li"); if (it.done) li.className = "done"; li.dataset.id = it.id;
     const c = document.createElement("button"); c.type = "button"; c.className = "chk";
     c.setAttribute("aria-label", it.done ? "완료 취소" : "완료");
     c.innerHTML = it.done ? '<svg width="14" height="14" viewBox="0 0 14 14"><path d="M2.5 7.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' : "";
     c.onclick = () => write(backend.update(user.uid, it.id, { done: !it.done }));
     const t = document.createElement("span"); t.className = "time" + (it.time ? "" : " none"); t.textContent = it.time || "종일";
-    const x = document.createElement("span"); x.className = "txt"; x.textContent = it.title;
+    const x = openBtn(it);
     const del = document.createElement("button"); del.type = "button"; del.className = "del"; del.setAttribute("aria-label", "삭제"); del.textContent = "×";
     del.onclick = () => removeItem(it);
-    li.append(c, t, x, del); ul.appendChild(li);
+    li.append(c, t, x, del);
+    if (it.id === openId && draft) { li.classList.add("expanded"); li.appendChild(buildEditor(it)); }
+    ul.appendChild(li);
   });
+  if (fid && $(fid)) { const el = $(fid); el.focus({ preventScroll: true }); try { if (s0 !== null) el.setSelectionRange(s0, s1); } catch (e) {} }
   const done = list.filter(i => i.done).length;
   $("count").textContent = list.length ? done + " / " + list.length + " 완료" : "";
   $("bar").style.width = list.length ? (done / list.length * 100) + "%" : "0";
   $("empty").hidden = !!list.length;
+
+  const od = items.filter(i => !i.done && i.date < tk);
+  $("overdue").hidden = !od.length;
+  $("overdue-txt").textContent = "지난 일정 " + od.length + "개가 남아 있어요";
+  const undoneN = items.filter(i => !i.done).length;
+  $("undone-n").textContent = undoneN;
+  $("btn-undone").classList.toggle("zero", !undoneN);
+  if (!$("od").hidden) renderOverdue();
 
   const up = items.filter(i => !i.done && i.date > tk && i.date !== sel)
     .sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : byTime(a, b)).slice(0, 5);
@@ -415,6 +501,151 @@ function render() {
     r.onclick = () => go(it.date); ll.appendChild(r);
   });
 }
+
+/* ---------- 세부 사항 (할 일 바로 아래에 펼쳐짐) ---------- */
+const dLabel = k => { const d = parse(k); return (d.getMonth() + 1) + "/" + d.getDate() + " (" + WD[d.getDay()] + ")"; };
+function previewText(it) {
+  const memo = (it.memo || "").split("\n").map(s => s.trim()).find(Boolean) || "";
+  return memo;
+}
+let openId = null, draft = null;
+function openBtn(it, fromOverdue) {
+  const x = document.createElement("button"); x.type = "button"; x.className = "open";
+  x.setAttribute("aria-expanded", String(!fromOverdue && openId === it.id));
+  x.setAttribute("aria-label", it.title + ", 세부 사항 " + (openId === it.id ? "접기" : "펼치기"));
+  const tt = document.createElement("span"); tt.className = "tt"; tt.textContent = it.title; x.appendChild(tt);
+  const pv = previewText(it);
+  if (pv && (fromOverdue || openId !== it.id)) { const p = document.createElement("span"); p.className = "pv"; p.textContent = pv; x.appendChild(p); }
+  x.onclick = () => {
+    if (fromOverdue) { closeOverdue(); sel = it.date; $("f-date").value = sel; }
+    toggleDetail(it, fromOverdue);
+  };
+  return x;
+}
+function toggleDetail(it, forceOpen) {
+  if (openId === it.id && !forceOpen) { openId = null; draft = null; render(); return; }
+  openId = it.id;
+  draft = { title: it.title || "", date: it.date || sel, time: it.time || "", memo: it.memo || "" };
+  render();
+  const li = document.querySelector('li[data-id="' + it.id + '"]');
+  if (li) li.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+function field(label, id, el) {
+  const w = document.createElement("div"); w.className = "field";
+  const l = document.createElement("label"); l.htmlFor = id; l.textContent = label;
+  el.id = id; w.append(l, el); return w;
+}
+// 메모가 5줄을 넘으면 칸이 저절로 늘어나요 (모서리를 끌어서 직접 조절도 가능)
+function grow(el) {
+  const min = parseFloat(getComputedStyle(el).minHeight) || 0, prev = el.offsetHeight;
+  el.style.height = "auto";
+  el.style.height = Math.max(min, prev, el.scrollHeight + 2) + "px";
+}
+function mkInput(type, key, extra) {
+  const el = document.createElement(type === "textarea" ? "textarea" : "input");
+  if (type !== "textarea") el.type = type;
+  el.value = draft[key] || "";
+  Object.assign(el, extra || {});
+  el.addEventListener("input", () => { draft[key] = el.value; if (type === "textarea") grow(el); });
+  if (type === "textarea") {
+    el.rows = 5; requestAnimationFrame(() => grow(el));
+    el.addEventListener("compositionend", () => grow(el));
+    el.addEventListener("keyup", () => grow(el));
+  }
+  return el;
+}
+function buildEditor(it) {
+  const ex = document.createElement("div"); ex.className = "ex";
+  const two = document.createElement("div"); two.className = "two";
+  two.append(field("날짜", "x-date", mkInput("date", "date")), field("시간 (비우면 종일)", "x-time", mkInput("time", "time")));
+  const err = document.createElement("p"); err.className = "ferr"; err.setAttribute("role", "alert"); err.hidden = true;
+  const actions = document.createElement("div"); actions.className = "actions";
+  const del = document.createElement("button"); del.type = "button"; del.className = "ghost danger"; del.textContent = "삭제";
+  const sp = document.createElement("span"); sp.className = "sp";
+  const close = document.createElement("button"); close.type = "button"; close.className = "ghost"; close.textContent = "접기";
+  const save = document.createElement("button"); save.type = "button"; save.className = "solid"; save.textContent = "저장";
+  actions.append(del, sp, close, save);
+  ex.append(
+    field("할 일", "x-title", mkInput("text", "title", { maxLength: 500, autocomplete: "off" })),
+    two,
+    field("메모", "x-memo", mkInput("textarea", "memo", { maxLength: 5000, placeholder: "준비물, 순서, 기억할 내용 등을 적어두세요" })),
+    err, actions);
+  close.onclick = () => { openId = null; draft = null; render(); };
+  del.onclick = () => { openId = null; draft = null; removeItem(it); render(); };
+  save.onclick = () => {
+    const title = (draft.title || "").trim();
+    if (!title) { err.textContent = "할 일 이름을 입력해 주세요."; err.hidden = false; $("x-title").focus(); return; }
+    const patch = { title, date: draft.date || it.date, time: draft.time || "", memo: (draft.memo || "").trim() };
+    openId = null; draft = null;
+    write(backend.update(user.uid, it.id, patch));
+    render();
+    toast(patch.date !== it.date ? dLabel(patch.date) + "(으)로 옮겨 저장했어요" : "저장했어요");
+  };
+  ex.addEventListener("keydown", e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) save.click(); });
+  return ex;
+}
+
+/* ---------- 지난 일정 ---------- */
+function renderOverdue() {
+  const tk = todayKey();
+  const all = items.filter(i => !i.done)
+    .sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : byTime(a, b) || ((a.createdAt || 0) - (b.createdAt || 0)));
+  const sections = [
+    { name: "지난 일정", warn: true, list: all.filter(i => i.date < tk) },
+    { name: "오늘", list: all.filter(i => i.date === tk) },
+    { name: "앞으로", list: all.filter(i => i.date > tk) }
+  ];
+  const box = $("od-list"); box.innerHTML = "";
+  const overN = sections[0].list.length;
+  $("od-all").hidden = !overN;
+  $("od-all").textContent = "지난 일정 모두 오늘로 옮기기 (" + overN + "개)";
+  if (!all.length) {
+    const p = document.createElement("p"); p.className = "empty"; p.textContent = "체크하지 않은 할 일이 없어요. 모두 해냈어요!";
+    box.appendChild(p); return;
+  }
+  sections.forEach(sec => {
+    if (!sec.list.length) return;
+    const h4 = document.createElement("h4"); if (sec.warn) h4.className = "warn";
+    h4.textContent = sec.name + " "; const sm = document.createElement("small"); sm.textContent = sec.list.length + "개"; h4.appendChild(sm);
+    box.appendChild(h4);
+    let cur = null, group = null;
+    sec.list.forEach(it => {
+      if (it.date !== cur) {
+        cur = it.date;
+        const days = Math.round((parse(it.date) - parse(tk)) / 86400000);
+        const h = document.createElement("h3"); h.innerHTML = "<span></span><em></em>";
+        h.firstChild.textContent = dLabel(it.date);
+        h.lastChild.textContent = days === 0 ? "" : days === -1 ? "어제" : days < 0 ? (-days) + "일 지남" : days === 1 ? "내일" : days + "일 후";
+        if (days < 0) h.lastChild.className = "warn";
+        if (sec.name !== "오늘") box.appendChild(h);
+        group = document.createElement("div"); box.appendChild(group);
+      }
+      const r = document.createElement("div"); r.className = "orow";
+      const c = document.createElement("button"); c.type = "button"; c.className = "chk"; c.setAttribute("aria-label", "완료");
+      c.onclick = () => { write(backend.update(user.uid, it.id, { done: true })); toast("‘" + it.title + "’ 완료"); };
+      const t = document.createElement("span"); t.className = "time" + (it.time ? "" : " none"); t.textContent = it.time || "종일";
+      r.append(c, t, openBtn(it, true));
+      if (it.date < tk) {
+        const m = document.createElement("button"); m.type = "button"; m.className = "mini"; m.textContent = "오늘로";
+        m.onclick = () => { write(backend.update(user.uid, it.id, { date: tk })); toast("‘" + it.title + "’ 오늘로 옮겼어요"); };
+        r.appendChild(m);
+      } else r.appendChild(document.createElement("span"));
+      group.appendChild(r);
+    });
+  });
+}
+function openOverdue() { renderOverdue(); $("od").hidden = false; $("od-head").focus(); }
+function closeOverdue() { $("od").hidden = true; }
+$("overdue").onclick = openOverdue;
+$("btn-undone").onclick = openOverdue;
+$("od-close").onclick = closeOverdue;
+$("od").addEventListener("click", e => { if (e.target === $("od")) closeOverdue(); });
+$("od-all").onclick = () => {
+  const tk = todayKey(), od = items.filter(i => !i.done && i.date < tk);
+  od.forEach(i => write(backend.update(user.uid, i.id, { date: tk })));
+  go(tk);
+  toast(od.length + "개를 오늘로 옮겼어요");
+};
 
 /* ---------- 쓰기 ---------- */
 // 오프라인일 때도 화면에는 바로 반영되고, 연결되면 저장돼요. 실패만 알려줘요.
@@ -468,7 +699,12 @@ function closeSheet() { $("sheet").hidden = true; $("btn-account").focus(); }
 $("btn-account").onclick = openSheet;
 $("sheet-close").onclick = closeSheet;
 $("sheet").addEventListener("click", e => { if (e.target === $("sheet")) closeSheet(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("sheet").hidden) closeSheet(); });
+document.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  if (!$("od").hidden) closeOverdue();
+  else if (!$("sheet").hidden) closeSheet();
+  else if (openId) { openId = null; draft = null; render(); }
+});
 
 $("btn-logout").onclick = () => { $("acct-actions").hidden = true; $("logout-confirm").hidden = false; $("lo-ok").focus(); };
 $("lo-cancel").onclick = () => { $("logout-confirm").hidden = true; $("acct-actions").hidden = false; };
@@ -491,7 +727,8 @@ $("f-import").onchange = async e => {
     const ok = /^\d{4}-\d{2}-\d{2}$/;
     const list = (Array.isArray(data.items) ? data.items : []).filter(i => i && typeof i.title === "string" && ok.test(i.date))
       .map(i => ({ id: typeof i.id === "string" && /^[A-Za-z0-9_-]{1,100}$/.test(i.id) ? i.id : backend.newId(user.uid),
-        title: i.title.slice(0, 500), date: i.date, time: /^\d{2}:\d{2}$/.test(i.time || "") ? i.time : "", done: !!i.done, createdAt: Number(i.createdAt) || Date.now() }));
+        title: i.title.slice(0, 500), date: i.date, time: /^\d{2}:\d{2}$/.test(i.time || "") ? i.time : "", done: !!i.done, createdAt: Number(i.createdAt) || Date.now(),
+        memo: typeof i.memo === "string" ? i.memo.slice(0, 5000) : "" }));
     if (!list.length) { toast("이 파일에서 불러올 할 일을 찾지 못했어요."); return; }
     await backend.setMany(user.uid, list);
     closeSheet();
